@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'redux-zero/react';
 import { planets } from './actions';
+import "./App.css"
 
-const Listplanet = ({ name }) => {
+const Listplanet = ({ name, img }) => {
   return (
     <div>
+      <img src={img} />
       <h3>{name}</h3>
     </div>
   );
@@ -13,15 +15,17 @@ const Listplanet = ({ name }) => {
 const App = ({mydata}) => {
   const componentPlanets = mydata.map((item, index) => {
     return (
-      <li key={index}>
-        <Listplanet name={item.name} />
-      </li>
+      <div key={index}>
+        <Listplanet img={item.img} name={item.name} />
+      </div>
     );
   })
   return (
-    <div>
+    <div className="container">
       <button onClick={() => planets()}>Buscar</button>
-      <div>{mydata.length != 0 ? <ul>{componentPlanets}</ul>:<br />}</div>
+      <div>
+        <div>{componentPlanets}</div>
+      </div>
     </div>
   )
 }

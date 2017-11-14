@@ -26,11 +26,12 @@ getJSON("data/earth-like-results.json")
 async function search(direction) {
     const url = direction
     fetch(url)
-        .then(res => res.json())
-        .then(res => {
+        .then(response => response.json())
+        .then(response => {
             let newList = [...store.getState().mydata];
             let getPlanets = newList.concat({
-                name: res.pl_name,
+                img: response.pl_img,
+                name: response.pl_name,
             })
             store.setState({
                 mydata: getPlanets
@@ -40,12 +41,9 @@ async function search(direction) {
 }
 
 export async function planets() {
-    const url = "data/earth-like-results.json";
-    fetch(url)
-        .then(res => res.json())
-        .then(res => {
-            res.results.map(planet => {
+    const response = await fetch("data/earth-like-results.json")
+    const json = await response.json();
+         json.results.map(planet => {
                 return (search(planet));
             })
-        })
 }
